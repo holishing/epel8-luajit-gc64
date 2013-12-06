@@ -1,6 +1,6 @@
 Name:           luajit
 Version:        2.0.2
-Release:        6%{?dist}
+Release:        7%{?dist}
 Summary:        Just-In-Time Compiler for Lua
 License:        MIT
 URL:            http://luajit.org/
@@ -47,7 +47,7 @@ make amalg Q= E=@: PREFIX=%{_prefix} \
 %install
 # PREREL= - disable -betaX suffix
 # INSTALL_TNAME - executable name
-%make_install INSTALL_TNAME=%{name} PREFIX=%{_prefix} \
+%make_install PREFIX=%{_prefix} \
               INSTALL_LIB=%{buildroot}%{_libdir}
 
 rm -rf _tmp_html ; mkdir _tmp_html
@@ -62,7 +62,8 @@ find %{buildroot} -type f -name *.a -delete
 
 %files
 %doc COPYRIGHT README
-%{_bindir}/luajit
+%{_bindir}/%{name}
+%{_bindir}/%{name}-%{version}
 %{_libdir}/libluajit*.so.*
 %{_mandir}/man1/luajit*
 %{_datadir}/%{name}-%{version}/
@@ -74,6 +75,9 @@ find %{buildroot} -type f -name *.a -delete
 %{_libdir}/pkgconfig/*.pc
 
 %changelog
+* Fri Dec 06 2013 Igor Gnatenko <i.gnatenko.brain@gmail.com> - 2.0.2-7
+- Fix executable binary
+
 * Mon Dec 02 2013 Igor Gnatenko <i.gnatenko.brain@gmail.com> - 2.0.2-6
 - Fix .pc
 
