@@ -1,6 +1,6 @@
 Name:           luajit
 Version:        2.0.2
-Release:        7%{?dist}
+Release:        8%{?dist}
 Summary:        Just-In-Time Compiler for Lua
 License:        MIT
 URL:            http://luajit.org/
@@ -26,9 +26,6 @@ chmod +x ./configure
 # drop no-stack-protector (besser82)
 sed -i -e '/-fno-stack-protector/s/^/#/' src/Makefile
 
-# drop strip (besser82)
-sed -i -e "/\$\\(TARGET_STRIP\\)/s/^/#/" src/Makefile
-
 # fix .pc (besser82)
 sed -i -e 's!${.*prefix}/lib!%{_libdir}!g' etc/luajit.pc
 
@@ -40,7 +37,7 @@ sed -i -e '/install -m/s/-m/-p -m/' Makefile
 # Q= - enable verbose output
 # E= @: - disable @echo messages
 # NOTE: we use amalgamated build as per documentation suggestion doc/install.html
-make amalg Q= E=@: PREFIX=%{_prefix} \
+make amalg Q= E=@: PREFIX=%{_prefix} TARGET_STRIP=: \
            INSTALL_LIB=%{_libdir} CFLAGS="%{optflags}" \
            %{?_smp_mflags}
 
@@ -75,6 +72,9 @@ find %{buildroot} -type f -name *.a -delete
 %{_libdir}/pkgconfig/*.pc
 
 %changelog
+* Mon Dec 09 2013 Igor Gnatenko <i.gnatenko.brain@gmail.com> - 2.0.2-8
+- Fix strip (thanks Ville Skyttä)
+
 * Fri Dec 06 2013 Igor Gnatenko <i.gnatenko.brain@gmail.com> - 2.0.2-7
 - Fix executable binary
 
