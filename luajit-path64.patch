@@ -1,0 +1,17 @@
+--- LuaJIT-2.0.2/src/luaconf.h.orig	2013-12-15 23:38:21.729467102 +0000
++++ LuaJIT-2.0.2/src/luaconf.h	2013-12-15 23:38:41.057542902 +0000
+@@ -28,12 +28,12 @@
+ */
+ #define LUA_ROOT	"/usr/local/"
+ #define LUA_LDIR	LUA_ROOT "share/lua/5.1/"
+-#define LUA_CDIR	LUA_ROOT "lib/lua/5.1/"
++#define LUA_CDIR	LUA_ROOT "lib64/lua/5.1/"
+ #ifdef LUA_XROOT
+ #define LUA_JDIR	LUA_XROOT "share/luajit-2.0.2/"
+ #define LUA_XPATH \
+   ";" LUA_XROOT "share/lua/5.1/?.lua;" LUA_XROOT "share/lua/5.1/?/init.lua"
+-#define LUA_XCPATH	LUA_XROOT "lib/lua/5.1/?.so;"
++#define LUA_XCPATH	LUA_XROOT "lib64/lua/5.1/?.so;"
+ #else
+ #define LUA_JDIR	LUA_ROOT "share/luajit-2.0.2/"
+ #define LUA_XPATH

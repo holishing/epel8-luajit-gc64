@@ -1,10 +1,11 @@
 Name:           luajit
 Version:        2.0.2
-Release:        8%{?dist}
+Release:        9%{?dist}
 Summary:        Just-In-Time Compiler for Lua
 License:        MIT
 URL:            http://luajit.org/
 Source0:        http://luajit.org/download/LuaJIT-%{version}.tar.gz
+Patch0:         luajit-path64.patch
 
 %description
 LuaJIT implements the full set of language features defined by Lua 5.1.
@@ -31,6 +32,10 @@ sed -i -e 's!${.*prefix}/lib!%{_libdir}!g' etc/luajit.pc
 
 # preserve timestamps (cicku)
 sed -i -e '/install -m/s/-m/-p -m/' Makefile
+
+%ifarch x86_64
+%patch0 -p1 -b .path64
+%endif
 
 %build
 %configure
@@ -72,6 +77,9 @@ find %{buildroot} -type f -name *.a -delete
 %{_libdir}/pkgconfig/*.pc
 
 %changelog
+* Sun Dec 15 2013 Clive Messer <clive.messer@communitysqueeze.org> - 2.0.2-9
+- Apply luajit-path64.patch on x86_64.
+
 * Mon Dec 09 2013 Igor Gnatenko <i.gnatenko.brain@gmail.com> - 2.0.2-8
 - Fix strip (thanks Ville Skyttä)
 
