@@ -1,11 +1,10 @@
 Name:           luajit
-Version:        2.0.2
-Release:        9%{?dist}
+Version:        2.0.3
+Release:        1%{?dist}
 Summary:        Just-In-Time Compiler for Lua
 License:        MIT
 URL:            http://luajit.org/
 Source0:        http://luajit.org/download/LuaJIT-%{version}.tar.gz
-Patch0:         luajit-path64.patch
 
 %description
 LuaJIT implements the full set of language features defined by Lua 5.1.
@@ -24,17 +23,11 @@ This package contains development files for %{name}.
 echo '#!/bin/sh' > ./configure
 chmod +x ./configure
 
-# drop no-stack-protector (besser82)
-sed -i -e '/-fno-stack-protector/s/^/#/' src/Makefile
-
-# fix .pc (besser82)
-sed -i -e 's!${.*prefix}/lib!%{_libdir}!g' etc/luajit.pc
-
 # preserve timestamps (cicku)
 sed -i -e '/install -m/s/-m/-p -m/' Makefile
 
 %ifarch x86_64
-%patch0 -p1 -b .path64
+%global multilib_flag MULTILIB=lib64
 %endif
 
 %build
@@ -43,14 +36,15 @@ sed -i -e '/install -m/s/-m/-p -m/' Makefile
 # E= @: - disable @echo messages
 # NOTE: we use amalgamated build as per documentation suggestion doc/install.html
 make amalg Q= E=@: PREFIX=%{_prefix} TARGET_STRIP=: \
-           INSTALL_LIB=%{_libdir} CFLAGS="%{optflags}" \
+           CFLAGS="%{optflags}" \
+           %{?multilib_flag} \
            %{?_smp_mflags}
 
 %install
 # PREREL= - disable -betaX suffix
 # INSTALL_TNAME - executable name
 %make_install PREFIX=%{_prefix} \
-              INSTALL_LIB=%{buildroot}%{_libdir}
+              %{?multilib_flag}
 
 rm -rf _tmp_html ; mkdir _tmp_html
 cp -a doc _tmp_html/html
@@ -77,6 +71,9 @@ find %{buildroot} -type f -name *.a -delete
 %{_libdir}/pkgconfig/*.pc
 
 %changelog
+* Thu Mar 13 2014 Igor Gnatenko <i.gnatenko.brain@gmail.com> - 2.0.3-1
+- 2.0.3 upstream release
+
 * Sun Dec 15 2013 Clive Messer <clive.messer@communitysqueeze.org> - 2.0.2-9
 - Apply luajit-path64.patch on x86_64.
 
