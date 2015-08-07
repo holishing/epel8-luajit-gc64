@@ -7,7 +7,7 @@ URL:            http://luajit.org/
 Source0:        http://luajit.org/download/LuaJIT-%{version}.tar.gz
 
 %if 0%{?rhel}
-  ExclusiveArch:  %{ix86} x86_64
+ExclusiveArch:  %{ix86} x86_64
 %endif
 
 %description
