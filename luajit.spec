@@ -1,6 +1,6 @@
 Name:           luajit
 Version:        2.0.4
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Just-In-Time Compiler for Lua
 License:        MIT
 URL:            http://luajit.org/
@@ -76,6 +76,9 @@ find %{buildroot} -type f -name *.a -delete
 %{_libdir}/pkgconfig/*.pc
 
 %changelog
+* Thu Feb 04 2016 Fedora Release Engineering <releng@fedoraproject.org> - 2.0.4-4
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
+
 * Fri Aug 07 2015 Oliver Haessler <oliver@redhat.com> - 2.0.4-3
 - only build x86_64 on EPEL as luajit has no support for ppc64
 
