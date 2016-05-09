@@ -1,14 +1,12 @@
 Name:           luajit
 Version:        2.0.4
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        Just-In-Time Compiler for Lua
 License:        MIT
 URL:            http://luajit.org/
 Source0:        http://luajit.org/download/LuaJIT-%{version}.tar.gz
 
-%if 0%{?rhel}
-ExclusiveArch:  %{ix86} x86_64
-%endif
+ExclusiveArch:  %{arm} %{ix86} x86_64
 
 %description
 LuaJIT implements the full set of language features defined by Lua 5.1.
@@ -76,6 +74,9 @@ find %{buildroot} -type f -name *.a -delete
 %{_libdir}/pkgconfig/*.pc
 
 %changelog
+* Mon May 09 2016 Dan Horák <dan[at]danny.cz> - 2.0.4-5
+- set ExclusiveArch also for Fedora
+
 * Thu Feb 04 2016 Fedora Release Engineering <releng@fedoraproject.org> - 2.0.4-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
 
