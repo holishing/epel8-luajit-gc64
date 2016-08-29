@@ -34,7 +34,6 @@ This package contains development files for %{name}.
 sed -i -e '/install -m/s/-m/-p -m/' Makefile
 
 %build
-%configure
 # Q= - enable verbose output
 # E= @: - disable @echo messages
 # NOTE: we use amalgamated build as per documentation suggestion doc/install.html
