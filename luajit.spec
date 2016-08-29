@@ -4,13 +4,13 @@ Name:           luajit
 Version:        2.1.0
 %global apiver %(v=%{version}; echo ${v%.${v#[0-9].[0-9].}})
 %global srcver %{version}%{?rctag:-%{rctag}}
-Release:        0.1%{?rctag:%{rctag}}%{?dist}
+Release:        0.2%{?rctag:%{rctag}}%{?dist}
 Summary:        Just-In-Time Compiler for Lua
 License:        MIT
 URL:            http://luajit.org/
 Source0:        http://luajit.org/download/LuaJIT-%{srcver}.tar.gz
 
-ExclusiveArch:  %{arm} %{ix86} x86_64 %{mips}
+ExclusiveArch:  %{arm} %{ix86} x86_64 %{mips} aarch64
 
 BuildRequires:  gcc
 BuildRequires:  make
@@ -79,6 +79,9 @@ ln -s %{name}-%{srcver} %{buildroot}%{_bindir}/%{name}
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Mon Aug 29 2016 Igor Gnatenko <ignatenko@redhat.com> - 2.1.0-0.2beta2
+- Add aarch64 to ExclusiveArch
+
 * Mon Aug 29 2016 Igor Gnatenko <ignatenko@redhat.com> - 2.1.0-0.1beta2
 - Update to 2.1.0-beta2 (RHBZ #1371158)
 
