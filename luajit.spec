@@ -1,12 +1,19 @@
+%global rctag beta2
+
 Name:           luajit
-Version:        2.0.4
-Release:        5%{?dist}
+Version:        2.1.0
+%global apiver %(v=%{version}; echo ${v%.${v#[0-9].[0-9].}})
+%global srcver %{version}%{?rctag:-%{rctag}}
+Release:        0.1%{?rctag:%{rctag}}%{?dist}
 Summary:        Just-In-Time Compiler for Lua
 License:        MIT
 URL:            http://luajit.org/
-Source0:        http://luajit.org/download/LuaJIT-%{version}.tar.gz
+Source0:        http://luajit.org/download/LuaJIT-%{srcver}.tar.gz
 
-ExclusiveArch:  %{arm} %{ix86} x86_64
+ExclusiveArch:  %{arm} %{ix86} x86_64 %{mips}
+
+BuildRequires:  gcc
+BuildRequires:  make
 
 %description
 LuaJIT implements the full set of language features defined by Lua 5.1.
@@ -21,16 +28,10 @@ Requires:       %{name}%{?_isa} = %{version}-%{release}
 This package contains development files for %{name}.
 
 %prep
-%setup -q -n LuaJIT-%{version}
-echo '#!/bin/sh' > ./configure
-chmod +x ./configure
+%autosetup -n LuaJIT-%{srcver}
 
 # preserve timestamps (cicku)
 sed -i -e '/install -m/s/-m/-p -m/' Makefile
-
-%ifarch x86_64
-%global multilib_flag MULTILIB=lib64
-%endif
 
 %build
 %configure
@@ -38,21 +39,26 @@ sed -i -e '/install -m/s/-m/-p -m/' Makefile
 # E= @: - disable @echo messages
 # NOTE: we use amalgamated build as per documentation suggestion doc/install.html
 make amalg Q= E=@: PREFIX=%{_prefix} TARGET_STRIP=: \
-           CFLAGS="%{optflags}" \
-           %{?multilib_flag} \
+           CFLAGS="%{optflags}" LDFLAGS="%{__global_ldflags}" \
+           MULTILIB=%{_lib} \
            %{?_smp_mflags}
 
 %install
 # PREREL= - disable -betaX suffix
 # INSTALL_TNAME - executable name
 %make_install PREFIX=%{_prefix} \
-              %{?multilib_flag}
+              MULTILIB=%{_lib}
 
 rm -rf _tmp_html ; mkdir _tmp_html
 cp -a doc _tmp_html/html
 
 # Remove static .a
-find %{buildroot} -type f -name *.a -delete
+find %{buildroot} -type f -name *.a -delete -print
+
+%if %{defined rctag}
+# Development versions are not doing such symlink
+ln -s %{name}-%{srcver} %{buildroot}%{_bindir}/%{name}
+%endif
 
 %post -p /sbin/ldconfig
 
@@ -62,18 +68,21 @@ find %{buildroot} -type f -name *.a -delete
 %license COPYRIGHT
 %doc README
 %{_bindir}/%{name}
-%{_bindir}/%{name}-%{version}
-%{_libdir}/libluajit*.so.*
-%{_mandir}/man1/luajit*
-%{_datadir}/%{name}-%{version}/
+%{_bindir}/%{name}-%{srcver}
+%{_libdir}/lib%{name}-*.so.*
+%{_mandir}/man1/%{name}.1*
+%{_datadir}/%{name}-%{srcver}/
 
 %files devel
 %doc _tmp_html/html/
-%{_includedir}/luajit-2.0/
-%{_libdir}/libluajit*.so
-%{_libdir}/pkgconfig/*.pc
+%{_includedir}/%{name}-%{apiver}/
+%{_libdir}/lib%{name}-*.so
+%{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Mon Aug 29 2016 Igor Gnatenko <ignatenko@redhat.com> - 2.1.0-0.1beta2
+- Update to 2.1.0-beta2 (RHBZ #1371158)
+
 * Mon May 09 2016 Dan Horák <dan[at]danny.cz> - 2.0.4-5
 - set ExclusiveArch also for Fedora
 
