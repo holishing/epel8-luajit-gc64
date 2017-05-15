@@ -1,10 +1,10 @@
-%global rctag beta2
+%global rctag beta3
 
 Name:           luajit
 Version:        2.1.0
 %global apiver %(v=%{version}; echo ${v%.${v#[0-9].[0-9].}})
 %global srcver %{version}%{?rctag:-%{rctag}}
-Release:        0.3%{?rctag:%{rctag}}%{?dist}
+Release:        0.4%{?rctag:%{rctag}}%{?dist}
 Summary:        Just-In-Time Compiler for Lua
 License:        MIT
 URL:            http://luajit.org/
@@ -79,6 +79,9 @@ ln -s %{name}-%{srcver} %{buildroot}%{_bindir}/%{name}
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Mon May 15 2017 Tom Callaway <spot@fedoraproject.org> - 2.1.0-0.4beta3
+- Update to 2.1.0-beta3
+
 * Fri Feb 10 2017 Fedora Release Engineering <releng@fedoraproject.org> - 2.1.0-0.3beta2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
 
