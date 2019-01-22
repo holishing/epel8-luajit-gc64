@@ -59,9 +59,7 @@ find %{buildroot} -type f -name *.a -delete -print
 ln -s %{name}-%{srcver} %{buildroot}%{_bindir}/%{name}
 %endif
 
-%post -p /sbin/ldconfig
-
-%postun -p /sbin/ldconfig
+%ldconfig_scriptlets
 
 %files
 %license COPYRIGHT
