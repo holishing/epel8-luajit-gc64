@@ -85,6 +85,19 @@ Patch56: 0056-DynASM-MIPS-Fix-shadowed-variable.patch
 Patch57: 0057-Fix-MinGW-build.patch
 Patch58: 0058-Fix-os.date-for-wider-libc-strftime-compatibility.patch
 Patch59: 0059-Improve-luaL_addlstring.patch
+Patch60: 0060-Fix-arm64-register-allocation-issue-for-XLOAD.patch
+Patch61: 0061-Fix-arm64-register-allocation-issue-for-XLOAD.patch
+Patch62: 0062-Remove-redundant-emit_check_ofs.patch
+Patch63: 0063-aarch64-Use-the-xzr-register-whenever-possible.patch
+Patch64: 0064-Merge-in-LuaJIT-test-cleanup-into-the-main-repo.patch
+Patch65: 0065-Add-support-for-FNMADD-and-FNMSUB.patch
+Patch66: 0066-Fix-os.date-for-timezone-change-awareness.patch
+Patch67: 0067-Revert-FFI-Make-FP-to-U64-conversions-match-JIT-back.patch
+Patch68: 0068-bench-Fix-build-warnings.patch
+Patch69: 0069-Guard-against-undefined-behaviour-when-casting-from-.patch
+Patch70: 0070-Fix-build-erro-with-fnmsub-fusing.patch
+Patch71: 0071-aarch64-better-float-to-unsigned-int-conversion.patch
+Patch72: 0072-Better-behaviour-for-float-to-uint32_t-conversions.patch
 
 ExclusiveArch:  %{arm} %{ix86} x86_64 %{mips} aarch64
 
@@ -137,6 +150,11 @@ ln -s %{name}-%{srcver} %{buildroot}%{_bindir}/%{name}
 
 %ldconfig_scriptlets
 
+%check
+
+# Don't fail the build on a check failure.
+make check || true
+
 %files
 %license COPYRIGHT
 %doc README
@@ -155,6 +173,8 @@ ln -s %{name}-%{srcver} %{buildroot}%{_bindir}/%{name}
 %changelog
 * Fri Apr 12 2019 Siddhesh Poyarekar <sid@reserved-bit.com> - 2.1.0-0.10beta3
 - Add upstream bug fixes from the v2.1 branch.
+- Add bug fixes from https://github.com/siddhesh/LuaJIT.git
+- Incorporate tests and benchmarks from LuaJIT-test-cleanup.
 
 * Fri Feb 01 2019 Fedora Release Engineering <releng@fedoraproject.org> - 2.1.0-0.9beta3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
