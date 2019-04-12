@@ -4,11 +4,87 @@ Name:           luajit
 Version:        2.1.0
 %global apiver %(v=%{version}; echo ${v%.${v#[0-9].[0-9].}})
 %global srcver %{version}%{?rctag:-%{rctag}}
-Release:        0.9%{?rctag:%{rctag}}%{?dist}
+Release:        0.10%{?rctag:%{rctag}}%{?dist}
 Summary:        Just-In-Time Compiler for Lua
 License:        MIT
 URL:            http://luajit.org/
 Source0:        http://luajit.org/download/LuaJIT-%{srcver}.tar.gz
+
+# Patches from https://github.com/siddhesh/LuaJIT.git
+# Generated from v2.1 branch against the 2.1.0-beta3 tag.
+# Some patches, as indicated below, have been modified to account for merge
+# commits, so care needs to be taken when auto-generating patches so that
+# existing patches are not replaced.
+
+# Merge commit
+Patch1: 0001-Fix-LJ_MAX_JSLOTS-assertion-in-rec_check_slots.patch
+# Merge commit
+Patch2: 0002-Add-missing-LJ_MAX_JSLOTS-check.patch
+Patch3: 0003-MIPS-Use-precise-search-for-exit-jump-patching.patch
+Patch4: 0004-MIPS-Fix-handling-of-spare-long-range-jump-slots.patch
+Patch5: 0005-MIPS64-Add-soft-float-support-to-JIT-compiler-backen.patch
+Patch6: 0006-FreeBSD-x64-Avoid-changing-resource-limits-if-not-ne.patch
+Patch7: 0007-Remove-unused-define.patch
+Patch8: 0008-Modify-fix-for-warning-from-ar.patch
+Patch9: 0009-x64-LJ_GC64-Fix-emit_rma.patch
+Patch10: 0010-PPC-Add-soft-float-support-to-interpreter.patch
+Patch11: 0011-Use-https-for-freelists.org-links.patch
+Patch12: 0012-x64-LJ_GC64-Fix-fallback-case-of-asm_fuseloadk64.patch
+Patch13: 0013-PPC-Add-soft-float-support-to-JIT-compiler-backend.patch
+Patch14: 0014-x64-LJ_GC64-Fix-type-check-only-variant-of-SLOAD.patch
+Patch15: 0015-MIPS64-Hide-internal-function.patch
+# Merge commit
+Patch16: 0016-DynASM-x86-Fix-potential-REL_A-overflow.patch
+Patch17: 0017-LJ_GC64-Fix-ir_khash-for-non-string-GCobj.patch
+Patch18: 0018-LJ_GC64-Make-ASMREF_L-references-64-bit.patch
+Patch19: 0019-Fix-FOLD-rule-for-strength-reduction-of-widening.patch
+Patch20: 0020-ARM64-Fix-assembly-of-HREFK.patch
+Patch21: 0021-MIPS64-Fix-register-allocation-in-assembly-of-HREF.patch
+Patch22: 0022-ARM64-Fix-xpcall-error-case.patch
+Patch23: 0023-Fix-saved-bytecode-encapsulated-in-ELF-objects.patch
+Patch24: 0024-ARM64-Fix-xpcall-error-case-really.patch
+Patch25: 0025-MIPS64-Fix-xpcall-error-case.patch
+Patch26: 0026-Fix-IR_BUFPUT-assembly.patch
+# This patch gets dropped when merged from master to v2.1.
+# Patch27: 0027-Fix-string.format-c-0.patch
+Patch28: 0028-Fix-ARMv8-32-bit-subset-detection.patch
+Patch29: 0029-Fix-LuaJIT-API-docs-for-LUAJIT_MODE_.patch
+Patch30: 0030-MIPS64-Fix-soft-float-0.0-vs.-0.0-comparison.patch
+# Merge commit
+Patch31: 0031-FFI-Don-t-assert-on-1LL-5.2-compatibility-mode-only.patch
+# Merge commit
+Patch32: 0032-Fix-GCC-7-Wimplicit-fallthrough-warnings.patch
+# Merge commit
+Patch33: 0033-Clear-stack-after-print_jit_status-in-CLI.patch
+Patch34: 0034-Fix-rechaining-of-pseudo-resurrected-string-keys.patch
+Patch35: 0035-DynASM-x86-Add-BMI1-and-BMI2-instructions.patch
+Patch36: 0036-Give-expected-results-for-negative-non-base-10-numbe.patch
+Patch37: 0037-FFI-Add-tonumber-specialization-for-failed-conversio.patch
+Patch38: 0038-Bump-copyright-date-to-2018.patch
+# Merge commit
+Patch39: 0039-FFI-Make-FP-to-U64-conversions-match-JIT-backend-beh.patch
+Patch40: 0040-x86-x64-Check-for-jcc-when-using-xor-r-r-in-emit_loa.patch
+# Merge commit
+Patch41: 0041-PPC-NetBSD-Fix-endianess-check.patch
+Patch42: 0042-DynASM-x86-Add-FMA3-instructions.patch
+Patch43: 0043-x86-Disassemble-FMA3-instructions.patch
+Patch44: 0044-From-Lua-5.3-assert-accepts-any-type-of-error-object.patch
+Patch45: 0045-Windows-Add-UWP-support-part-1.patch
+Patch46: 0046-ARM64-Fix-write-barrier-in-BC_USETS.patch
+Patch47: 0047-ARM64-Fix-exit-stub-patching.patch
+Patch48: 0048-DynASM-Fix-warning.patch
+Patch49: 0049-DynASM-x86-Fix-vroundps-vroundpd-encoding.patch
+Patch50: 0050-Fix-memory-probing-allocator-to-check-for-valid-end-.patch
+Patch51: 0051-MIPS-MIPS64-Fix-TSETR-barrier-again.patch
+Patch52: 0052-Actually-implement-maxirconst-trace-limit.patch
+Patch53: 0053-Better-detection-of-MinGW-build.patch
+# Merge commit
+Patch54: 0054-Fix-overflow-of-snapshot-map-offset.patch
+Patch55: 0055-DynASM-PPC-Fix-shadowed-variable.patch
+Patch56: 0056-DynASM-MIPS-Fix-shadowed-variable.patch
+Patch57: 0057-Fix-MinGW-build.patch
+Patch58: 0058-Fix-os.date-for-wider-libc-strftime-compatibility.patch
+Patch59: 0059-Improve-luaL_addlstring.patch
 
 ExclusiveArch:  %{arm} %{ix86} x86_64 %{mips} aarch64
 
@@ -28,7 +104,7 @@ Requires:       %{name}%{?_isa} = %{version}-%{release}
 This package contains development files for %{name}.
 
 %prep
-%autosetup -n LuaJIT-%{srcver}
+%autosetup -n LuaJIT-%{srcver} -p1
 
 # preserve timestamps (cicku)
 sed -i -e '/install -m/s/-m/-p -m/' Makefile
@@ -77,6 +153,9 @@ ln -s %{name}-%{srcver} %{buildroot}%{_bindir}/%{name}
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Fri Apr 12 2019 Siddhesh Poyarekar <sid@reserved-bit.com> - 2.1.0-0.10beta3
+- Add upstream bug fixes from the v2.1 branch.
+
 * Fri Feb 01 2019 Fedora Release Engineering <releng@fedoraproject.org> - 2.1.0-0.9beta3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
 
