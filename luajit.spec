@@ -4,7 +4,7 @@ Name:           luajit
 Version:        2.1.0
 %global apiver %(v=%{version}; echo ${v%.${v#[0-9].[0-9].}})
 %global srcver %{version}%{?rctag:-%{rctag}}
-Release:        0.10%{?rctag:%{rctag}}%{?dist}
+Release:        0.11%{?rctag:%{rctag}}%{?dist}
 Summary:        Just-In-Time Compiler for Lua
 License:        MIT
 URL:            http://luajit.org/
@@ -98,8 +98,9 @@ Patch69: 0069-Guard-against-undefined-behaviour-when-casting-from-.patch
 Patch70: 0070-Fix-build-erro-with-fnmsub-fusing.patch
 Patch71: 0071-aarch64-better-float-to-unsigned-int-conversion.patch
 Patch72: 0072-Better-behaviour-for-float-to-uint32_t-conversions.patch
+Patch73: luajit-s390x.patch
 
-ExclusiveArch:  %{arm} %{ix86} x86_64 %{mips} aarch64
+ExclusiveArch:  %{arm} %{ix86} x86_64 %{mips} aarch64 s390x
 
 BuildRequires:  gcc
 BuildRequires:  make
@@ -171,6 +172,9 @@ make check || true
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Wed Apr 24 2019 Siddhesh Poyarekar <sid@reserved-bit.com> - 2.1.0-0.11beta3
+- Add s390x support.
+
 * Fri Apr 12 2019 Siddhesh Poyarekar <sid@reserved-bit.com> - 2.1.0-0.10beta3
 - Add upstream bug fixes from the v2.1 branch.
 - Add bug fixes from https://github.com/siddhesh/LuaJIT.git
