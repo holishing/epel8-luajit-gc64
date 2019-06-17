@@ -128,7 +128,7 @@ sed -i -e '/install -m/s/-m/-p -m/' Makefile
 # E= @: - disable @echo messages
 # NOTE: we use amalgamated build as per documentation suggestion doc/install.html
 make amalg Q= E=@: PREFIX=%{_prefix} TARGET_STRIP=: \
-           CFLAGS="%{optflags}" LDFLAGS="%{__global_ldflags}" \
+           CFLAGS="%{build_cflags}" LDFLAGS="%{build_ldflags}" \
            MULTILIB=%{_lib} \
            %{?_smp_mflags}
 
