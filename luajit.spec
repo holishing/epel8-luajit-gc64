@@ -4,7 +4,7 @@ Name:           luajit
 Version:        2.1.0
 %global apiver %(v=%{version}; echo ${v%.${v#[0-9].[0-9].}})
 %global srcver %{version}%{?rctag:-%{rctag}}
-Release:        0.11%{?rctag:%{rctag}}%{?dist}
+Release:        0.12%{?rctag:%{rctag}}%{?dist}
 Summary:        Just-In-Time Compiler for Lua
 License:        MIT
 URL:            http://luajit.org/
@@ -120,6 +120,9 @@ This package contains development files for %{name}.
 %prep
 %autosetup -n LuaJIT-%{srcver} -p1
 
+# Enable Lua 5.2 features
+sed -i -e '/-DLUAJIT_ENABLE_LUA52COMPAT/s/^#//' src/Makefile
+
 # preserve timestamps (cicku)
 sed -i -e '/install -m/s/-m/-p -m/' Makefile
 
@@ -172,6 +175,9 @@ make check || true
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Mon Jun 17 07:10:20 CEST 2019 Igor Gnatenko <ignatenkobrain@fedoraproject.org> - 2.1.0-0.12beta3
+- Enable Lua 5.2 compatibility
+
 * Wed Apr 24 2019 Siddhesh Poyarekar <sid@reserved-bit.com> - 2.1.0-0.11beta3
 - Add s390x support.
 
