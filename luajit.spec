@@ -4,7 +4,7 @@ Name:           luajit
 Version:        2.1.0
 %global apiver %(v=%{version}; echo ${v%.${v#[0-9].[0-9].}})
 %global srcver %{version}%{?rctag:-%{rctag}}
-Release:        0.12%{?rctag:%{rctag}}%{?dist}
+Release:        0.13%{?rctag:%{rctag}}%{?dist}
 Summary:        Just-In-Time Compiler for Lua
 License:        MIT
 URL:            http://luajit.org/
@@ -99,6 +99,10 @@ Patch70: 0070-Fix-build-erro-with-fnmsub-fusing.patch
 Patch71: 0071-aarch64-better-float-to-unsigned-int-conversion.patch
 Patch72: 0072-Better-behaviour-for-float-to-uint32_t-conversions.patch
 Patch73: luajit-s390x.patch
+Patch74: arm-Fix-up-condition-codes-for-conditional-arithmeti.patch
+Patch75: bugfix-fixed-a-segfault-when-unsinking-64-bit-pointers.patch
+Patch76: remove-setrlimit-on-freebsd.patch
+Patch77: test-check-for-package_searchers-only-in-compat5_2.patch
 
 ExclusiveArch:  %{arm} %{ix86} x86_64 %{mips} aarch64 s390x
 
@@ -175,6 +179,12 @@ make check || true
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Wed Jun 19 2019 Siddhesh Poyarekar <sid@reserved-bit.com> - 2.1.0-0.13beta3
+- arm: Fix up condition codes for conditional arithmetic insn.
+- bugfix: fixed a segfault when unsinking 64-bit pointers.
+- Remove setrlimit on FreeBSD.
+- test: Check for package.searchers only in compat5.2.
+
 * Mon Jun 17 07:10:20 CEST 2019 Igor Gnatenko <ignatenkobrain@fedoraproject.org> - 2.1.0-0.12beta3
 - Enable Lua 5.2 compatibility
 
