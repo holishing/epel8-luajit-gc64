@@ -4,7 +4,7 @@ Name:           luajit
 Version:        2.1.0
 %global apiver %(v=%{version}; echo ${v%.${v#[0-9].[0-9].}})
 %global srcver %{version}%{?rctag:-%{rctag}}
-Release:        0.14%{?rctag:%{rctag}}%{?dist}
+Release:        0.15%{?rctag:%{rctag}}%{?dist}
 Summary:        Just-In-Time Compiler for Lua
 License:        MIT
 URL:            http://luajit.org/
@@ -104,6 +104,7 @@ Patch75: bugfix-fixed-a-segfault-when-unsinking-64-bit-pointers.patch
 Patch76: remove-setrlimit-on-freebsd.patch
 Patch77: test-check-for-package_searchers-only-in-compat5_2.patch
 Patch78: patch-for-ppc64-support.patch
+Patch79: luajit-openresty-features.patch
 
 ExclusiveArch:  %{arm} %{ix86} x86_64 %{mips} aarch64 s390x ppc64le
 
@@ -180,6 +181,9 @@ make check || true
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Tue Jun 25 2019 Siddhesh Poyarekar <sid@reserved-bit.com> - 2.1.0-0.15beta3
+- Port JIT features and fixes from openresty/luajit2.
+
 * Wed Jun 19 2019 Siddhesh Poyarekar <sid@reserved-bit.com> - 2.1.0-0.14beta3
 - Patch for PPC64 support.
 
