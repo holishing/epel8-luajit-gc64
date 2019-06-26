@@ -153,11 +153,6 @@ cp -a doc _tmp_html/html
 # Remove static .a
 find %{buildroot} -type f -name *.a -delete -print
 
-%if %{defined rctag}
-# Development versions are not doing such symlink
-ln -s %{name}-%{srcver} %{buildroot}%{_bindir}/%{name}
-%endif
-
 %ldconfig_scriptlets
 
 %check
