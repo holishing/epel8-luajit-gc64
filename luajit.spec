@@ -105,6 +105,7 @@ Patch76: remove-setrlimit-on-freebsd.patch
 Patch77: test-check-for-package_searchers-only-in-compat5_2.patch
 Patch78: patch-for-ppc64-support.patch
 Patch79: luajit-openresty-features.patch
+Patch80: luajit-update-20190925.patch
 
 ExclusiveArch:  %{arm} %{ix86} x86_64 %{mips} aarch64 s390x ppc64le
 
@@ -176,6 +177,12 @@ make check || true
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Wed Sep 25 2019 Siddhesh Poyarekar <sid@reserved-bit.com> - 2.1.0-0.16beta3
+- New API functions jit.prngstate and thread.exdata from OpenResty.
+- Bug fixes in ppc64le and aarch64.
+- Optimised string hash function for SSE4.2
+- Miscellaneous bug fixes.
+
 * Thu Jul 25 2019 Fedora Release Engineering <releng@fedoraproject.org> - 2.1.0-0.16beta3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_31_Mass_Rebuild
 
