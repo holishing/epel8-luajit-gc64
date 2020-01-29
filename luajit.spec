@@ -4,7 +4,7 @@ Name:           luajit
 Version:        2.1.0
 %global apiver %(v=%{version}; echo ${v%.${v#[0-9].[0-9].}})
 %global srcver %{version}%{?rctag:-%{rctag}}
-Release:        0.16%{?rctag:%{rctag}}%{?dist}
+Release:        0.17%{?rctag:%{rctag}}%{?dist}
 Summary:        Just-In-Time Compiler for Lua
 License:        MIT
 URL:            http://luajit.org/
@@ -177,6 +177,9 @@ make check || true
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Wed Jan 29 2020 Fedora Release Engineering <releng@fedoraproject.org> - 2.1.0-0.17beta3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_32_Mass_Rebuild
+
 * Wed Sep 25 2019 Siddhesh Poyarekar <sid@reserved-bit.com> - 2.1.0-0.16beta3
 - New API functions jit.prngstate and thread.exdata from OpenResty.
 - Bug fixes in ppc64le and aarch64.
