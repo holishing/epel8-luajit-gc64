@@ -4,7 +4,7 @@ Name:           luajit
 Version:        2.1.0
 %global apiver %(v=%{version}; echo ${v%.${v#[0-9].[0-9].}})
 %global srcver %{version}%{?rctag:-%{rctag}}
-Release:        0.19%{?rctag:%{rctag}}%{?dist}
+Release:        0.19%{?rctag:%{rctag}}clam0.1%{?dist}
 Summary:        Just-In-Time Compiler for Lua
 License:        MIT
 URL:            http://luajit.org/
@@ -130,6 +130,9 @@ This package contains development files for %{name}.
 # Enable Lua 5.2 features
 sed -i -e '/-DLUAJIT_ENABLE_LUA52COMPAT/s/^#//' src/Makefile
 
+# Enable GC64 features
+sed -i -e '/-DLUAJIT_ENABLE_GC64/s/^#//' src/Makefile
+
 # preserve timestamps (cicku)
 sed -i -e '/install -m/s/-m/-p -m/' Makefile
 
@@ -177,6 +180,9 @@ make check || true
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Tue Mar 02 2021 Sean Ho <holishing@ccns.ncku.edu.tw> - 2.1.0-0.19beta3clam0.1
+- Enable GC64 by default
+
 * Tue Jan 26 2021 Fedora Release Engineering <releng@fedoraproject.org> - 2.1.0-0.19beta3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_34_Mass_Rebuild
 
